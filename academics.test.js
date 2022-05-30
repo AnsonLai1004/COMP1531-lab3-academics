@@ -43,9 +43,11 @@ describe('Sample test', () => {
 
     // However, we can still use this ID in other functions
     expect(academicDetails(academic.academicId, academic.academicId)).toStrictEqual({
-      academicId: academic.academicId,
-      name: 'Magnus',
-      hobby: 'chess',
+      academic: {
+        academicId: academic.academicId,
+        name: 'Magnus',
+        hobby: 'chess',
+      }
     });
 
     // Note the different key for "name" in this function - refer to "Data Types"
