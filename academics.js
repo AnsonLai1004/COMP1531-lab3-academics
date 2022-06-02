@@ -6,9 +6,9 @@
  * Create your dataStore here. The design is entirely up to you!
  * One possible starting point is
  *
- * dataStore = {
- *     academics: [],
- *     courses: []
+ * let/const dataStore = {
+ *   academics: [],
+ *   courses: []
  * }
  *
  * and adding to the dataStore the necessary information when the
@@ -16,6 +16,10 @@
  *
  * You will also need to modify the clear function accordingly
  * - we recommend you complete clear() at the bottom first!
+ * 
+ * Do not export the dataStore. Your tests should not use/rely on
+ * how dataStore is structured - only what goes in and out of the
+ * defined functions from the interface.
  */
 
 // TODO
