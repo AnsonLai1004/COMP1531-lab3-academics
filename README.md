@@ -19,7 +19,7 @@ However, being the brilliant engineer that you are, you will of course ensure th
 ### Getting Started
 - Please make sure you have completed `lab03_password` prior.
 - Copy the SSH clone link from Gitlab and clone this repository on either VLAB or your local machine. 
-- In your terminal, change your directory (using the `cd` command) into the newly cloned lab. To check if you have done this correctly, type `ls` in this new directory to see if you can see the relevant files (including [array.js](array.js)).
+- In your terminal, change your directory (using the `cd` command) into the newly cloned lab. To check if you have done this correctly, type `ls` in this new directory to see if you can see the relevant files (including [academics.js](academics.js)).
 
 ### Package Installation
 
@@ -84,7 +84,7 @@ The functions from lab01_academics are no longer a part of the interface. Howeve
         <code>{academicId, name, description}</code>
     </td>
     <td>
-        <code>{academicId}</code>
+        <code>{courseId}</code>
     </td>
     <td>
         Return <code>{error}</code> if:
