@@ -68,6 +68,7 @@ export function academicDetails(academicId, academicToViewId) {
   // TODO
   return {
     academic: {
+      academicId: -999,
       name: 'Aya',
       hobby: 'music',
     }
