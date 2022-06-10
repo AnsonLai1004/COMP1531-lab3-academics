@@ -84,16 +84,19 @@ export function courseDetails(academicId, courseId) {
       description: 'Software Engineering Fundamentals',
       staffMembers: [
         {
+          academicId: -999,
           name: 'Ben',
           hobby: 'boxing',
         },
       ],
       allMembers: [
         {
+          academicId: -999,
           name: 'Ben',
           hobby: 'boxing',
         },
         {
+          academicId: -888,
           name: 'Cid',
           hobby: 'novel',
         },
