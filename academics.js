@@ -66,32 +66,37 @@ export function courseCreate(academicId, name, description) {
  */
 export function academicDetails(academicId, academicToViewId) {
   // TODO
-  return {
-    academic: {
-      name: 'Aya',
-      hobby: 'music',
-    }
-  };
+return {
+  academic: {
+    academicId: -999,
+    name: 'Aya',
+    hobby: 'music',
+  }
+};
 }
 
 export function courseDetails(academicId, courseId) {
   // TODO
   return {
     course: {
+      courseId: -1531,
       name: 'COMP1531',
       description: 'Software Engineering Fundamentals',
       staffMembers: [
         {
+          academicId: -999,
           name: 'Ben',
           hobby: 'boxing',
         },
       ],
       allMembers: [
         {
+          academicId: -999,
           name: 'Ben',
           hobby: 'boxing',
         },
         {
+          academicId: -888,
           name: 'Cid',
           hobby: 'novel',
         },
