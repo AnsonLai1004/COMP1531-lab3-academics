@@ -23,6 +23,10 @@
  */
 
 // TODO
+const dataStore = {
+  academics: [],
+  courses: [],
+};
 
 /**
  * Complete the functions from the interface table.
@@ -41,8 +45,22 @@
  */
 export function academicCreate(name, hobby) {
   // TODO:
+  if (name === '' | hobby === '') {
+    return { error: 'error' };
+  }
+  const len = dataStore.academics.length;
+  const object = {};
+  if (len === 0) {
+    object.id = 10;  
+  } else {
+    const newid = dataStore.academics[len - 1].id + 10;
+    object.id = newid;
+  }
+  object.name = name;
+  object.hobby = hobby;
+  dataStore.academics.push(object);
   return {
-    academicId: 111,
+    academicId: object.id,
   };
 }
 
@@ -55,10 +73,67 @@ export function academicCreate(name, hobby) {
  * @returns {{courseId: number}}
  */
 export function courseCreate(academicId, name, description) {
-  // TODO
+  // check Id
+  if (!isValidId(academicId)) {
+    console.log("not valid ID");
+    return { error: 'error' };
+  }
+  // check name
+  if (!validCourseName(name)) {
+    return { error: 'error' };
+  }
+  const len = dataStore.courses.length;
+  const course = {};
+  if (len === 0) {
+    course.id = 10;
+  } else {
+    course.id = dataStore.courses[len - 1].id + 10;
+  }
+  course.name = name;
+  course.description = description;
+  course.members = [academicId];
+  course.staffs = [academicId];
+  dataStore.courses.push(course);
   return {
-    courseId: 123,
+    courseId: course.id,
   };
+}
+// helper functions
+function isValidId(academicId) {
+  for (let i of dataStore.academics) {
+    if (i.id === academicId) {
+      return true;
+    } 
+  }
+  return false;
+}
+
+function validCourseName(name) {
+  const len = name.length;
+  if (len !== 8) {
+    return false;
+  }
+  for (let i = 0; i < 4; i++) {
+    if (name.charAt(i) !== name.charAt(i).toUpperCase()) {
+      console.log("Uppercase part")
+      return false;
+    }
+  }
+  for (let i = 4; i < 8; i++) {
+    if (isNaN(parseInt(name.charAt(i)))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function validCourseId(courseId) {
+  for (let element of dataStore.courses) {
+    if (element.id === courseId) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -66,17 +141,36 @@ export function courseCreate(academicId, name, description) {
  */
 export function academicDetails(academicId, academicToViewId) {
   // TODO
-  return {
-    academic: {
-      name: 'Aya',
-      hobby: 'music',
+  if (!isValidId(academicId) || !isValidId(academicToViewId)) {
+    return { error: 'error' };
+  }
+  const academic = dataStore.academics;
+  for(let element of academic) {
+    if (element.id === academicToViewId) {
+      return { name: element.name, hobby: element.hobby};
     }
-  };
+  }
 }
 
 export function courseDetails(academicId, courseId) {
   // TODO
-  return {
+  if (!isValidId(academicId)) {
+    return { error: 'error'};
+  }
+  for (let element of dataStore.courses) {
+    if (element.id === courseId) {
+      return {
+        course:{
+          name: element.name,
+          description: element.description,
+          staffMembers: element.staffs,
+          allMembers: element.members,
+        }
+      }
+    }
+  }
+  return { error: 'error' };
+ /* return {
     course: {
       name: 'COMP1531',
       description: 'Software Engineering Fundamentals',
@@ -97,12 +191,25 @@ export function courseDetails(academicId, courseId) {
         },
       ],
     }
-  };
+  };*/
 }
 
 export function academicsList(academicId) {
   // TODO
-  return {
+  if (!isValidId(academicId)) {
+    return { error: 'error' };
+  }
+  const academics = [];
+  for (let element of dataStore.academics) {
+    let object = {
+      academicId: element.id,
+      academicName: element.name,
+    }
+    academics.push(object);
+  }
+  
+  return academics;
+  /*return {
     academics: [
       {
         academicId: 111,
@@ -113,12 +220,25 @@ export function academicsList(academicId) {
         academicName: 'Eve',
       },
     ]
-  };
+  };*/
 }
 
 export function coursesList(academicId) {
   // TODO
-  return {
+  if (!isValidId(academicId)) {
+    return { error: 'error' }
+  }
+  const courses = [];
+  for (let element of dataStore.courses) {
+    const object = {
+      courseId: element.id,
+      courseName: element.name,
+    }
+    courses.push(object);
+  }
+  
+  return { courses };
+  /*return {
     courses: [
       {
         courseId: 123,
@@ -129,10 +249,26 @@ export function coursesList(academicId) {
         courseName: 'Course 2',
       },
     ]
-  };
+  };*/
 }
 
 export function clear() {
   // TODO
   return {};
 }
+/*
+console.log(academicCreate('Ben', 'football'));
+console.log(courseCreate(10, 'Comp2521', 'ABCDEFG'));
+console.log(dataStore.courses);
+console.log(dataStore.academics);*/
+console.log('academicCreate:')
+console.log(academicCreate('Bob', 'eat'));
+console.log(academicCreate('Ada', 'chess'));
+console.log();
+//console.log(courseCreate(10, 'COMP1531', 'ABCDEFG'));
+//console.log(academicDetails(100, 20));
+//console.log(courseDetails(10,10));
+console.log('academicsList return: ')
+console.log(academicsList(10));
+//console.log(coursesList(10));
+//console.log(academicDetails(10, 20));
