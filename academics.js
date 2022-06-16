@@ -141,16 +141,26 @@ function validCourseId(courseId) {
  */
 export function academicDetails(academicId, academicToViewId) {
   // TODO
+
   if (!isValidId(academicId) || !isValidId(academicToViewId)) {
     return { error: 'error' };
   }
   const academic = dataStore.academics;
   for(let element of academic) {
     if (element.id === academicToViewId) {
-      return { name: element.name, hobby: element.hobby};
+      return { academicId: elemen.id,name: element.name, hobby: element.hobby};
     }
   }
-}
+/*
+return {
+  academic: {
+    academicId: -999,
+    name: 'Aya',
+    hobby: 'music',
+  }*/
+};
+
+
 
 export function courseDetails(academicId, courseId) {
   // TODO
@@ -172,20 +182,24 @@ export function courseDetails(academicId, courseId) {
   return { error: 'error' };
  /* return {
     course: {
+      courseId: -1531,
       name: 'COMP1531',
       description: 'Software Engineering Fundamentals',
       staffMembers: [
         {
+          academicId: -999,
           name: 'Ben',
           hobby: 'boxing',
         },
       ],
       allMembers: [
         {
+          academicId: -999,
           name: 'Ben',
           hobby: 'boxing',
         },
         {
+          academicId: -888,
           name: 'Cid',
           hobby: 'novel',
         },
