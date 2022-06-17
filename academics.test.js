@@ -7,6 +7,7 @@ import {
   coursesList,
   clear,
 } from './academics';
+
 describe('Details function tests', () => {
   clear();
   test('error cases', () => {
@@ -17,6 +18,32 @@ describe('Details function tests', () => {
     expect(courseDetails(-999, -999)).toStrictEqual({ error: 'error'});
     expect(courseDetails(academic.academicId, -999)).toStrictEqual({ error: 'error'});
   });
+  clear();
+  test('correct academicDetails return', () => {
+    const academic = academicCreate('Aya', 'music');
+    expect(academicDetails(academic.academicId, academic.academicId)).toMatchObject({
+      academic: {
+        academicId: academic.academicId,
+        name: 'Aya',
+        hobby: 'music',
+      }
+    });
+  });
+  clear();
+  test('correct courseDetails return', () => { 
+    const academic = academicCreate('Aya', 'music');
+    const course = courseCreate(academic.academicId, 'COMP2521','ABCDEF');
+    expect(courseDetails(academic.academicId, course.courseId)).toMatchObject({
+      course: {
+        courseId: course.courseId,
+        name: 'COMP2521',
+        description: 'ABCDEF',
+        staffMembers: [ academic.academicId ],
+        allMembers: [ academic.academicId ],
+      } 
+    });
+  });
+
 });
 describe('academicCreate function tests', () => {
   test('error cases', () => {
@@ -87,7 +114,7 @@ describe('courseCreate function tests', () => {
       })
     );
   
-  expect(courseDetails(academic.academicId, course.courseId,)).toStrictEqual({
+  expect(courseDetails(academic.academicId, course.courseId,)).toMatchObject({
     course: {
       courseId: course.courseId,
       name: 'COMP2521',
@@ -113,6 +140,26 @@ describe('Lists function tests', () => {
   test('error cases', () => {
     expect(academicsList(-999)).toStrictEqual({ error: 'error'});
     expect(coursesList(-999)).toStrictEqual({ error: 'error'});
+  })
+  clear();
+  test('correct return', ()=> {
+    clear();
+    const a = academicCreate('Aya', 'music');
+    const coursea = courseCreate(a.academicId, 'COMP2521','ABCDEF');
+    const b = academicCreate('Bob', 'eat');
+    const courseb = courseCreate(b.academicId, 'COMP1531','ABCDEF');
+    expect(academicsList(a.academicId)).toMatchObject({
+      academics: [
+        { academicId: a.academicId, academicName: 'Aya' },
+        { academicId: b.academicId, academicName: 'Bob' },
+      ]
+    });
+    expect(coursesList(a.academicId)).toMatchObject({
+      courses: [
+        { courseId: 10, courseName: 'COMP2521' },
+        { courseId: 20, courseName: 'COMP1531' },
+      ]
+    });
   })
 });
 

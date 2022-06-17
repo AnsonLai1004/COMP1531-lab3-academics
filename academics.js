@@ -98,69 +98,27 @@ export function courseCreate(academicId, name, description) {
     courseId: course.id,
   };
 }
-// helper functions
-function isValidId(academicId) {
-  for (let i of dataStore.academics) {
-    if (i.id === academicId) {
-      return true;
-    } 
-  }
-  return false;
-}
-
-function validCourseName(name) {
-  const len = name.length;
-  if (len !== 8) {
-    return false;
-  }
-  for (let i = 0; i < 4; i++) {
-    if (name.charAt(i) !== name.charAt(i).toUpperCase()) {
-      console.log("Uppercase part")
-      return false;
-    }
-  }
-  for (let i = 4; i < 8; i++) {
-    if (isNaN(parseInt(name.charAt(i)))) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function validCourseId(courseId) {
-  for (let element of dataStore.courses) {
-    if (element.id === courseId) {
-      return true;
-    }
-  }
-  return false;
-}
 
 /**
  * Some documentation
  */
 export function academicDetails(academicId, academicToViewId) {
-  // TODO
-
   if (!isValidId(academicId) || !isValidId(academicToViewId)) {
     return { error: 'error' };
   }
   const academic = dataStore.academics;
   for(let element of academic) {
     if (element.id === academicToViewId) {
-      return { academicId: elemen.id,name: element.name, hobby: element.hobby};
+      return {
+        academic: {
+          academicId: element.id,
+          name: element.name, 
+          hobby: element.hobby,
+        }
+      };
     }
   }
-/*
-return {
-  academic: {
-    academicId: -999,
-    name: 'Aya',
-    hobby: 'music',
-  }*/
 };
-
-
 
 export function courseDetails(academicId, courseId) {
   // TODO
@@ -171,6 +129,7 @@ export function courseDetails(academicId, courseId) {
     if (element.id === courseId) {
       return {
         course:{
+          courseId: element.id,
           name: element.name,
           description: element.description,
           staffMembers: element.staffs,
@@ -180,32 +139,6 @@ export function courseDetails(academicId, courseId) {
     }
   }
   return { error: 'error' };
- /* return {
-    course: {
-      courseId: -1531,
-      name: 'COMP1531',
-      description: 'Software Engineering Fundamentals',
-      staffMembers: [
-        {
-          academicId: -999,
-          name: 'Ben',
-          hobby: 'boxing',
-        },
-      ],
-      allMembers: [
-        {
-          academicId: -999,
-          name: 'Ben',
-          hobby: 'boxing',
-        },
-        {
-          academicId: -888,
-          name: 'Cid',
-          hobby: 'novel',
-        },
-      ],
-    }
-  };*/
 }
 
 export function academicsList(academicId) {
@@ -213,7 +146,9 @@ export function academicsList(academicId) {
   if (!isValidId(academicId)) {
     return { error: 'error' };
   }
+  const result = {};
   const academics = [];
+
   for (let element of dataStore.academics) {
     let object = {
       academicId: element.id,
@@ -221,8 +156,8 @@ export function academicsList(academicId) {
     }
     academics.push(object);
   }
-  
-  return academics;
+  result.academics = academics;
+  return result;
   /*return {
     academics: [
       {
@@ -268,21 +203,66 @@ export function coursesList(academicId) {
 
 export function clear() {
   // TODO
+  dataStore.academics = new Array();
+  dataStore.courses = new Array ();
   return {};
 }
+
+// helper functions
+function isValidId(academicId) {
+  for (let i of dataStore.academics) {
+    if (i.id === academicId) {
+      return true;
+    } 
+  }
+  return false;
+}
+
+function validCourseName(name) {
+  const len = name.length;
+  if (len !== 8) {
+    return false;
+  }
+  for (let i = 0; i < 4; i++) {
+    if (name.charAt(i) !== name.charAt(i).toUpperCase()) {
+      console.log("Uppercase part")
+      return false;
+    }
+  }
+  for (let i = 4; i < 8; i++) {
+    if (isNaN(parseInt(name.charAt(i)))) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function validCourseId(courseId) {
+  for (let element of dataStore.courses) {
+    if (element.id === courseId) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /*
 console.log(academicCreate('Ben', 'football'));
 console.log(courseCreate(10, 'Comp2521', 'ABCDEFG'));
 console.log(dataStore.courses);
 console.log(dataStore.academics);*/
-console.log('academicCreate:')
-console.log(academicCreate('Bob', 'eat'));
-console.log(academicCreate('Ada', 'chess'));
-console.log();
-//console.log(courseCreate(10, 'COMP1531', 'ABCDEFG'));
-//console.log(academicDetails(100, 20));
-//console.log(courseDetails(10,10));
-console.log('academicsList return: ')
-console.log(academicsList(10));
+
+//console.log('academicsList return: ')
+//console.log(academicsList(10));
 //console.log(coursesList(10));
 //console.log(academicDetails(10, 20));
+const c = academicCreate('Mangus', 'msdfsd');
+console.log(academicsList(10));
+clear();
+const a = academicCreate('Aya', 'music');
+const coursea = courseCreate(a.academicId, 'COMP2521','ABCDEF');
+const b = academicCreate('Bob', 'eat');
+const courseb = courseCreate(b.academicId, 'COMP1531','ABCDEF');
+
+console.log(academicsList(10));
+console.log(coursesList(10));
